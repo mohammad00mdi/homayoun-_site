@@ -6,7 +6,7 @@ export default function Menu() {
   return (
     
       <div className="fixed bottom-40 inset-x-0 z-30 cursor-pointer">
-        <div className="max-w-6xl">
+        <div className="absolute bottom-40 left-15">
           <div className="flex flex-row-reverse items-center gap-6">
             <button className="flex flex-col gap-1.5">
               <span className="block w-6 h-[2px] bg-white" />

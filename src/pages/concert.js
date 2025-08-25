@@ -193,16 +193,19 @@ export default function ConcertsPage() {
               style={{ objectFit: "cover" }}
               priority
             />
-            <video
+            {/* <video
               autoPlay
               loop
               muted
               playsInline
               className="absolute inset-0 z-10 opacity-50 object-cover w-full h-full mix-blend-overlay"
             >
-              <source src="/WhatsApp Video 2025-08-23 at 03.59.10.mp4" type="video/mp4" />
+              <source
+                src="/WhatsApp Video 2025-08-23 at 03.59.10.mp4"
+                type="video/mp4"
+              />
               Your browser does not support the video tag.
-            </video>
+            </video> */}
           </motion.div>
 
           {/* سکشن اول - هدر */}
@@ -217,13 +220,13 @@ export default function ConcertsPage() {
 
             {/* دکمه اسکرول */}
             <div
-              className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center cursor-pointer z-50"
+              className="absolute bottom-10 left-1/2 -translate-x-1/2 flex items-center cursor-pointer z-50"
               onClick={() => scrollToSection(1)}
             >
-              <div className="w-6 h-10 border-2 border-white rounded-full flex items-start justify-center">
+              <div className="w-5 h-8 border-2 ml-5 border-white rounded-full flex items-start justify-center">
                 <motion.div
                   className="w-1 h-2 bg-white rounded-full mt-1"
-                  animate={{ y: [0, 20, 0] }}
+                  animate={{ y: [0, 10, 0] }}
                   transition={{ repeat: Infinity, duration: 2 }}
                 />
               </div>
@@ -232,36 +235,38 @@ export default function ConcertsPage() {
           </section>
 
           {/* منوی سال‌ها */}
-          <div className="fixed right-6 top-1/2 -translate-y-1/2 flex flex-col gap-2 text-xs z-50">
+          {/* منوی سال‌ها و دکمه‌های بالا/پایین */}
+          <div className="fixed right-6 top-1/2 -translate-y-1/2 flex flex-col items-center gap-2 z-50">
+            {/* سال‌ها */}
             {["1991", "1992", "1993", "1994", "1995", "1996"].map(
               (year, index) => (
                 <button
                   key={year}
-                  className="opacity-50 hover:opacity-100 transition text-white"
+                  className="opacity-50 hover:opacity-100 transition text-white text-xs"
                   onClick={() => scrollToSection(index + 1)}
                 >
                   {year}
                 </button>
               )
             )}
-          </div>
 
-          {/* دکمه‌های بالا/پایین */}
-          <div className="fixed bottom-40 right-6 flex gap-2 z-50">
-            <button
-              className="p-2 bg-gray-800 rounded-full text-white disabled:opacity-30 text-[10px]"
-              onClick={() => scrollToSection(currentSection - 1)}
-              disabled={currentSection === 0}
-            >
-              ▲
-            </button>
-            <button
-              className="p-2 bg-gray-800 rounded-full text-white disabled:opacity-30 text-[10px]"
-              onClick={() => scrollToSection(currentSection + 1)}
-              disabled={currentSection === sectionRefs.current.length - 1}
-            >
-              ▼
-            </button>
+            {/* دکمه‌های بالا/پایین */}
+            <div className="flex gap-1 mt-2">
+              <button
+                className="p-2 bg-gray-800 rounded-full text-white disabled:opacity-30 text-[10px]"
+                onClick={() => scrollToSection(currentSection - 1)}
+                disabled={currentSection === 0}
+              >
+                ▲
+              </button>
+              <button
+                className="p-2 bg-gray-800 rounded-full text-white disabled:opacity-30 text-[10px]"
+                onClick={() => scrollToSection(currentSection + 1)}
+                disabled={currentSection === sectionRefs.current.length - 1}
+              >
+                ▼
+              </button>
+            </div>
           </div>
 
           {/* منو با قابلیت کلیک */}
@@ -408,18 +413,35 @@ export default function ConcertsPage() {
                     />
                   </div>
 
-                  <div className="text-end rounded-lg">
+                  {/* انیمیشن متن سال */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.5 }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    className="text-end rounded-lg"
+                  >
                     <h2 className="font-bold text-2xl text-white">
                       {concert.year}
                     </h2>
-                  </div>
+                  </motion.div>
 
                   {concert.description && (
-                    <div className="w-full max-w-xs text-end p-3 rounded-lg">
+                    <motion.div
+                      initial={{ opacity: 0, y: 50 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, amount: 0.5 }}
+                      transition={{
+                        duration: 0.8,
+                        ease: "easeOut",
+                        delay: 0.2,
+                      }}
+                      className="w-full max-w-xs text-end pb-3 rounded-lg"
+                    >
                       <p className="text-gray-200 text-sm leading-relaxed">
                         {concert.description}
                       </p>
-                    </div>
+                    </motion.div>
                   )}
                 </div>
               </div>
@@ -457,45 +479,35 @@ export default function ConcertsPage() {
                     Menu
                   </h2>
 
-                  <div className="w-full max-w-md space-y-8">
+                  <div className="w-full max-w-3xl space-y-8">
                     {menuItems.map((item, i) => (
-                      <motion.div
+                      <div
                         key={item.title}
-                        custom={i}
-                        initial="hidden"
-                        animate="visible"
-                        variants={menuItemVariants}
-                        className="overflow-hidden flex items-center gap-5 justify-end group relative"
+                        className="overflow-hidden flex  items-center gap-5 justify-end group relative"
                       >
                         {/* خط در ابتدا */}
-                        <motion.div
-                          className="h-px bg-gray-600 ml-auto group-hover:bg-white transition-colors duration-300"
-                          initial={{ scaleX: 0.5, width: "20px" }}
-                          whileHover={{ scaleX: 1, width: "100px" }}
-                          transition={{ duration: 0.3 }}
-                          style={{ originX: 1 }}
-                        />
+                        <div className="h-px bg-gray-600 ml-auto transition-all duration-300 w-[20px] group-hover:w-[100px] group-hover:bg-white" />
 
                         {/* آیتم منو */}
                         <button
                           onClick={() => handleNavigation(item.path, "up")}
-                          className="text-xl font-light text-gray-400 hover:text-white transition-colors duration-300 py-3 relative z-10"
+                          className="text-xl font-light text-gray-400 transition-colors duration-300 py-3 relative z-10 group-hover:text-white"
                         >
                           {item.title}
                         </button>
 
-                        {/* دایره شماره صفحه (با فاصله از منو) */}
+                        {/* دایره شماره صفحه */}
                         <div className="relative flex-shrink-0 ml-6 z-0">
                           <div
                             className="w-8 h-8 rounded-full border border-gray-400 flex items-center justify-center 
-                              group-hover:bg-white transition-colors duration-300"
+                     transition-colors duration-300 group-hover:bg-white"
                           >
-                            <span className="text-xs text-gray-400 group-hover:text-black transition-colors duration-300">
+                            <span className="text-xs text-gray-400 transition-colors duration-300 group-hover:text-black">
                               {i < 9 ? `0${i + 1}` : i + 1}
                             </span>
                           </div>
                         </div>
-                      </motion.div>
+                      </div>
                     ))}
                   </div>
                 </motion.div>

@@ -1,18 +1,18 @@
-import { useRef, useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
-import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
-import Menu from './components/Menu';
-import Footer from './components/Footer';
-import Logo from './components/Logo';
+import { useRef, useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import Link from "next/link";
+import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
+import Menu from "./components/Menu";
+import Footer from "./components/Footer";
+import Logo from "./components/Logo";
 
 // تعریف exitVariants
 const exitVariants = {
   left: { x: "-100%", opacity: 0 },
   right: { x: "100%", opacity: 0 },
   up: { y: "-100%", opacity: 0 },
-  down: { y: "100%", opacity: 0 }
+  down: { y: "100%", opacity: 0 },
 };
 
 export default function LifePage() {
@@ -43,7 +43,7 @@ export default function LifePage() {
   const closeMenu = () => {
     setIsMenuOpen(false);
     setTimeout(() => {
-      window.scrollTo({ top: mainPageScroll, behavior: 'smooth' });
+      window.scrollTo({ top: mainPageScroll, behavior: "smooth" });
     }, 100);
   };
 
@@ -98,7 +98,7 @@ export default function LifePage() {
   useEffect(() => {
     const handleWheel = (e) => {
       if (isMenuOpen) return;
-      
+
       if (e.deltaY > 50 && currentSection < sectionRefs.current.length - 1) {
         scrollToSection(currentSection + 1);
       } else if (e.deltaY < -50 && currentSection > 0) {
@@ -108,7 +108,7 @@ export default function LifePage() {
 
     const handleKeyDown = (e) => {
       if (isMenuOpen) return;
-      
+
       if (
         e.key === "ArrowDown" &&
         currentSection < sectionRefs.current.length - 1
@@ -130,24 +130,26 @@ export default function LifePage() {
         const menuScrollTop = menuContentRef.current.scrollTop;
         const menuScrollHeight = menuContentRef.current.scrollHeight;
         const menuClientHeight = menuContentRef.current.clientHeight;
-        
+
         // محاسبه موقعیت نسبی اسکرول (بین 0 تا 1)
-        const scrollPercentage = menuScrollTop / (menuScrollHeight - menuClientHeight);
-        
+        const scrollPercentage =
+          menuScrollTop / (menuScrollHeight - menuClientHeight);
+
         // محاسبه موقعیت اسکرول صفحه اصلی بر اساس موقعیت اسکرول منو
-        const mainPageScrollPosition = scrollPercentage * (document.body.scrollHeight - window.innerHeight);
-        
+        const mainPageScrollPosition =
+          scrollPercentage * (document.body.scrollHeight - window.innerHeight);
+
         // اعمال اسکرول به صفحه اصلی
         window.scrollTo({
           top: mainPageScrollPosition,
-          behavior: 'auto' // از 'auto' به جای 'smooth' برای همگام سازی بهتر
+          behavior: "auto", // از 'auto' به جای 'smooth' برای همگام سازی بهتر
         });
       }
     };
 
     window.addEventListener("wheel", handleWheel, { passive: false });
     window.addEventListener("keydown", handleKeyDown);
-    
+
     // اضافه کردن event listener برای اسکرول منو
     if (menuContentRef.current) {
       menuContentRef.current.addEventListener("scroll", handleMenuScroll);
@@ -156,7 +158,7 @@ export default function LifePage() {
     return () => {
       window.removeEventListener("wheel", handleWheel);
       window.removeEventListener("keydown", handleKeyDown);
-      
+
       // حذف event listener هنگام unmount
       if (menuContentRef.current) {
         menuContentRef.current.removeEventListener("scroll", handleMenuScroll);
@@ -193,8 +195,8 @@ export default function LifePage() {
               style={{ objectFit: "cover" }}
               priority
             />
-            
-            <video
+
+            {/* <video
               autoPlay
               loop
               muted
@@ -203,7 +205,7 @@ export default function LifePage() {
             >
               <source src="/WhatsApp Video 2025-08-23 at 03.59.10.mp4" type="video/mp4" />
               Your browser does not support the video tag.
-            </video>
+            </video> */}
           </motion.div>
 
           <section
@@ -349,7 +351,7 @@ export default function LifePage() {
             <Menu />
           </div>
 
-          {/* بخش منوی جدید با تصویر در سمت چپ */}                                                                      
+          {/* بخش منوی جدید با تصویر در سمت چپ */}
           <AnimatePresence>
             {isMenuOpen && (
               <motion.div
@@ -380,45 +382,35 @@ export default function LifePage() {
                     Menu
                   </h2>
 
-                  <div className="w-full max-w-md space-y-8">
+                  <div className="w-full max-w-3xl space-y-8">
                     {menuItems.map((item, i) => (
-                      <motion.div
+                      <div
                         key={item.title}
-                        custom={i}
-                        initial="hidden"
-                        animate="visible"
-                        variants={menuItemVariants}
                         className="overflow-hidden flex items-center gap-5 justify-end group relative"
                       >
                         {/* خط در ابتدا */}
-                        <motion.div
-                          className="h-px bg-gray-600 ml-auto group-hover:bg-white transition-colors duration-300"
-                          initial={{ scaleX: 0.5, width: "20px" }}
-                          whileHover={{ scaleX: 1, width: "100px" }}
-                          transition={{ duration: 0.3 }}
-                          style={{ originX: 1 }}
-                        />
+                        <div className="h-px bg-gray-600 ml-auto transition-all duration-300 w-[20px] group-hover:w-[100px] group-hover:bg-white" />
 
                         {/* آیتم منو */}
                         <button
                           onClick={() => handleNavigation(item.path, "up")}
-                          className="text-xl font-light text-gray-400 hover:text-white transition-colors duration-300 py-3 relative z-10"
+                          className="text-xl font-light text-gray-400 transition-colors duration-300 py-3 relative z-10 group-hover:text-white"
                         >
                           {item.title}
                         </button>
 
-                        {/* دایره شماره صفحه (با فاصله از منو) */}
+                        {/* دایره شماره صفحه */}
                         <div className="relative flex-shrink-0 ml-6 z-0">
                           <div
                             className="w-8 h-8 rounded-full border border-gray-400 flex items-center justify-center 
-                              group-hover:bg-white transition-colors duration-300"
+                     transition-colors duration-300 group-hover:bg-white"
                           >
-                            <span className="text-xs text-gray-400 group-hover:text-black transition-colors duration-300">
+                            <span className="text-xs text-gray-400 transition-colors duration-300 group-hover:text-black">
                               {i < 9 ? `0${i + 1}` : i + 1}
                             </span>
                           </div>
                         </div>
-                      </motion.div>
+                      </div>
                     ))}
                   </div>
                 </motion.div>
