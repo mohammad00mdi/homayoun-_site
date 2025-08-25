@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+@font-face {
+  font-family: "DIN Condensed";
+  src: url("/font/DIN Condensed Light.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: "DIN Condensed", sans-serif;
+}
+  html, body {
+  height: 100%;
+  overflow: hidden;   /* کلاً اسکرول مرورگر بسته */
+}
+/* برای تمام مرورگرها */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE و Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;             /* Chrome, Safari */
+}
+
+.max-w-6xl {
+  max-width: none !important;
+  margin-left: 70px;   /* فاصله از سمت چپ */
+  margin-right: 70px;  /* فاصله از سمت راست */
+  margin-top: 25px;
+  margin-bottom: 15px;
+}
